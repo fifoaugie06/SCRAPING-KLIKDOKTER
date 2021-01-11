@@ -1,9 +1,7 @@
 package structs
 
-type News struct {
-	Title       string `json:"title,omitempty"`
-	Image       string `json:"image,omitempty"`
-	Description string `json:"description,omitempty"`
-	Link        string `json:"link,omitempty"`
-	PostDate    string `json:"post_date,omitempty"`
+type InfoSehat struct {
+	Title      string `json:"Title,omitempty"`
+	Image      string `json:"Image,omitempty"`
+	LinkDetail string `json:"LinkDetail,omitempty"`
 }

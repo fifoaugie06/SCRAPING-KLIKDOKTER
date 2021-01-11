@@ -1,14 +1,13 @@
 package controllers
 
 import (
-	"SCRAPING-INFORMATIKAUMM/structs"
+	"SCRAPING-KLIKDOKTER/structs"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/gin-gonic/gin"
-	"log"
 	"net/http"
 )
 
-func (idb *InDB) GetAllNews(c *gin.Context) {
+func GetInfoSehat(c *gin.Context) {
 	var (
 		result gin.H
 	)
@@ -43,30 +42,29 @@ func (idb *InDB) GetAllNews(c *gin.Context) {
 		return
 	}
 
-	rows := make([]structs.News, 0)
+	rows := make([]structs.InfoSehat, 0)
 
 	doc.Find(".streamline--articles--iridescent-series").Children().Each(func(i int, sel *goquery.Selection) {
-		row := new(structs.News)
+		row := new(structs.InfoSehat)
 		row.Title = sel.Find("h4").Text()
-		row.Link, _ = sel.Find("a").Attr("href")
+		row.Image, _ = sel.Find("img").Attr("src")
+		row.LinkDetail, _ = sel.Find("a").Attr("href")
 		rows = append(rows, *row)
 	})
-
-	log.Println(rows)
 
 	if len(rows) == 0 {
 		result = gin.H{
 			"status":  404,
-			"message": "News is null",
+			"message": "InfoSehat is null",
 		}
 		c.JSON(http.StatusBadRequest, result)
 		return
 	} else {
 		result = gin.H{
-			"status":     200,
-			"message":    "Success Retrieving News Data",
-			"data_count": len(rows),
-			"data":       rows,
+			"Status":    200,
+			"Message":   "Success Retrieving InfoSehat",
+			"DataCount": len(rows),
+			"Data":      rows,
 		}
 	}
 

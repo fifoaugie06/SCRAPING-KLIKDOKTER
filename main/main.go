@@ -1,8 +1,7 @@
 package main
 
 import (
-	"SCRAPING-INFORMATIKAUMM/config"
-	"SCRAPING-INFORMATIKAUMM/controllers"
+	"SCRAPING-KLIKDOKTER/controllers"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -11,12 +10,9 @@ func main() {
 	router := gin.Default()
 	router.Use(cors.Default())
 
-	db := config.DBInit()
-	inDB := &controllers.InDB{DB: db}
-
-	schedule := router.Group("/news")
+	infoSehat := router.Group("/info-sehat")
 	{
-		schedule.GET("/", inDB.GetAllNews)
+		infoSehat.GET("/", controllers.GetInfoSehat)
 	}
 
 	err := router.Run(":4591")
